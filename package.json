@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "clsx": "1.1.1",
+    "gsap": "./gsap-bonus.tgz",
     "hls.js": "1.1.5",
     "mousetrap": "1.6.5",
     "next": "^12.1.3",
@@ -24,6 +25,7 @@
     "react-device-detect": "2.1.2",
     "react-dom": "^18.0.0",
     "react-merge-refs": "1.1.0",
+    "styled-components": "^5.3.6",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
@@ -36,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "babel-plugin-optimize-clsx": "^2.6.2",
+    "babel-plugin-styled-components": "^2.0.7",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-next": "12.1.0",
@@ -241,5 +244,8 @@
     "*.@(ts|tsx|css|scss)": [
       "yarn lint --fix"
     ]
+  },
+  "resolutions": {
+    "styled-components": "^5"
   }
 }
