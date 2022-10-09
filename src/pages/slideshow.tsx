@@ -14,40 +14,39 @@ import image4 from '~/public/images/4.jpg'
 import image5 from '~/public/images/5.jpg'
 import image6 from '~/public/images/6.jpg'
 
-const data = [
-  {
-    meta: 'Gravity is a b****',
-    image: image1,
-    popularity: 'well known'
-  },
-  {
-    meta: "Clock's not right",
-    image: image2,
-    popularity: 'Newbie'
-  },
-  {
-    meta: 'Hot jungle speed',
-    image: image3,
-    popularity: 'Rising Star'
-  },
-  {
-    meta: 'Crisps gone wild',
-    image: image4,
-    popularity: 'well known'
-  },
-  {
-    meta: "Who's Walter?",
-    image: image5,
-    popularity: 'Newbie'
-  },
-  {
-    meta: 'Fancy franky',
-    image: image6,
-    popularity: 'well known'
-  }
-]
-
 const SlideShow = () => {
+  const data = [
+    {
+      meta: 'Gravity is a b****',
+      image: image1,
+      popularity: 'well known'
+    },
+    {
+      meta: "Clock's not right",
+      image: image2,
+      popularity: 'Newbie'
+    },
+    {
+      meta: 'Hot jungle speed',
+      image: image3,
+      popularity: 'Rising Star'
+    },
+    {
+      meta: 'Crisps gone wild',
+      image: image4,
+      popularity: 'well known'
+    },
+    {
+      meta: "Who's Walter?",
+      image: image5,
+      popularity: 'Newbie'
+    },
+    {
+      meta: 'Fancy franky',
+      image: image6,
+      popularity: 'well known'
+    }
+  ]
   const galleryRef = useRef<HTMLDivElement | null>(null)
   const prevRef = useRef<HTMLDivElement | null>(null)
   const nextRef = useRef<HTMLDivElement | null>(null)
