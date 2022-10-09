@@ -32,7 +32,6 @@ const Gallery = ({ data }: GalleryProps) => {
 const StyledGallery = styled.div`
   border-radius: 25vw 25vw 0 0;
   width: 100%;
-  grid-area: img;
   height: 100%;
   overflow: hidden;
   position: relative;

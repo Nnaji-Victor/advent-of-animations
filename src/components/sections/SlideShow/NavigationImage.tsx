@@ -7,12 +7,18 @@ import { DataProps } from '~/ts/data'
 interface NavigationImageProps {
   data: DataProps[]
   className: string
+  onClick: () => void
 }
-const NavigationImage = ({ data, className }: NavigationImageProps) => {
+const NavigationImage = ({
+  data,
+  className,
+  onClick
+}: NavigationImageProps) => {
   return (
     <StyledNavigationImage
       className={clsx(`nav nav--${className}`)}
       role="button"
+      onClick={onClick}
     >
       <div className="nav__imgwrap slides">
         {data.map((item, index) => (

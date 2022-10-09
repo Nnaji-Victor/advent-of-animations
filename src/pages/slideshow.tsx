@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 
 import { PageLayout } from '~/components/layout/page'
 import Vector from '~/components/primitives/vector'
 import Gallery from '~/components/sections/SlideShow/Gallery'
 import NavigationImage from '~/components/sections/SlideShow/NavigationImage'
+import { gsap } from '~/lib/gsap'
+import { SlideShowClass } from '~/lib/utils/slideshow/SlideShow'
 import image1 from '~/public/images/1.jpg'
 import image2 from '~/public/images/2.jpg'
 import image3 from '~/public/images/3.jpg'
@@ -46,6 +48,121 @@ const data = [
 ]
 
 const SlideShow = () => {
+  const galleryRef = useRef<HTMLDivElement | null>(null)
+  const prevRef = useRef<HTMLDivElement | null>(null)
+  const nextRef = useRef<HTMLDivElement | null>(null)
+  const [state, setState] = useState<any>({
+    bodyEl: '',
+    bodyColor: '',
+    titleElems: '',
+    slideshowMain: null,
+    slideshowNavPrev: null,
+    slideshowNavNext: null
+  })
+  useEffect(() => {
+    const bodyEl = document.body
+    const bodyColor = getComputedStyle(bodyEl).getPropertyValue('--color-bg')
+
+    const slideshowMain = new SlideShowClass(
+      galleryRef.current?.querySelector('.slides') as HTMLElement
+    )
+    const slideshowNavNext = new SlideShowClass(
+      nextRef.current?.querySelector('.slides') as HTMLElement,
+      { duration: 1, filtersAnimation: false }
+    )
+    const slideshowNavPrev = new SlideShowClass(
+      prevRef.current?.querySelector('.slides') as HTMLElement,
+      { duration: 1, filtersAnimation: false }
+    )
+
+    slideshowMain.setInitialSlide()
+    slideshowNavNext.setInitialSlide(
+      slideshowMain.current < slideshowMain.slidesTotal - 1
+        ? slideshowMain.current + 1
+        : 0
+    )
+    slideshowNavPrev.setInitialSlide(
+      slideshowMain.current
+        ? slideshowMain.current - 1
+        : slideshowMain.slidesTotal - 1
+    )
+
+    const titleElems: HTMLElement[] = gsap.utils.toArray(
+      '.meta__content > .meta__content-title'
+    )
+
+    gsap.set(titleElems[slideshowMain.current], { opacity: 1 })
+
+    setState({
+      slideshowMain,
+      slideshowNavPrev,
+      slideshowNavNext,
+      bodyColor,
+      bodyEl,
+      titleElems
+    })
+  }, [])
+
+  const {
+    slideshowMain,
+    slideshowNavPrev,
+    slideshowNavNext,
+    titleElems,
+    bodyEl,
+    bodyColor
+  } = state
+
+  const animateBodyBGColor = () => {
+    gsap
+      .timeline()
+      .to(
+        bodyEl,
+        {
+          duration: slideshowMain.duration / 2,
+          ease: 'power3.in',
+          backgroundColor: '#2b0889'
+        },
+        'start'
+      )
+      .to(
+        bodyEl,
+        {
+          duration: slideshowMain.duration,
+          ease: 'power3',
+          backgroundColor: bodyColor
+        },
+        'start+=' + slideshowMain.duration / 2
+      )
+  }
+
+  const onClickNavCtrlEv = (dir: 'prev' | 'next') => {
+    if (slideshowMain.isAnimating) return
+    gsap.to(titleElems[slideshowMain.current], {
+      duration: slideshowMain.duration / 2,
+      ease: 'power3.in',
+      y: dir === 'next' ? '-100%' : '100%',
+      opacity: 0
+    })
+
+    slideshowMain[dir]()
+    slideshowNavPrev[dir]()
+    slideshowNavNext[dir]()
+    animateBodyBGColor()
+
+    gsap.to(titleElems[slideshowMain.current], {
+      duration: slideshowMain.duration / 2,
+      ease: 'power3',
+      startAt: { y: dir === 'next' ? '100%' : '-100%' },
+      y: '0%',
+      opacity: 1,
+      delay: slideshowMain.duration / 2
+    })
+  }
+
+  function handleButtonClick(dir: 'prev' | 'next') {
+    onClickNavCtrlEv(dir)
+  }
+
   return (
     <PageLayout>
       <GlobalStyle />
@@ -63,9 +180,23 @@ const SlideShow = () => {
               ))}
             </div>
           </div>
-          <NavigationImage data={data} className="prev" />
-          <NavigationImage data={data} className="next" />
-          <Gallery data={data} />
+          <div className="prev" ref={prevRef}>
+            <NavigationImage
+              data={data}
+              className="prev"
+              onClick={() => handleButtonClick('prev')}
+            />
+          </div>
+          <div className="next" ref={nextRef}>
+            <NavigationImage
+              data={data}
+              className="next"
+              onClick={() => handleButtonClick('next')}
+            />
+          </div>
+          <div className="galleryRef" ref={galleryRef}>
+            <Gallery data={data} />
+          </div>
         </div>
       </StyledSlideShow>
     </PageLayout>
@@ -150,6 +281,21 @@ const StyledSlideShow = styled.section`
       pointer-events: auto;
       opacity: 1;
       z-index: 1000;
+    }
+
+    .galleryRef {
+      grid-area: img;
+    }
+    .prev {
+      grid-area: nav-prev;
+      align-items: flex-start;
+      padding-right: 1.5rem;
+    }
+
+    .next {
+      grid-area: nav-next;
+      align-items: flex-start;
+      padding-left: 1.5rem;
     }
   }
 `
