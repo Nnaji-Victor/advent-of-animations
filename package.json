@@ -35,6 +35,7 @@
     "@types/node": "17.0.21",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
+    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "babel-plugin-optimize-clsx": "^2.6.2",
