@@ -26,6 +26,10 @@ const App = ({ Component, pageProps }: AppProps) => {
       })
   }, [])
 
+  if (fontsLoaded) {
+    document.documentElement.classList.add('fonts-loaded')
+  }
+
   return (
     <>
       <Context.Provider value={{ fontsLoaded }}>
