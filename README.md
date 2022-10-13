@@ -1,7 +1,6 @@
 # next-typescript
 
-The objective of this boilerplate is to set up everything the developer will need (in terms of configuration) to start a next + typescript project. Eslint, prettier and husky are configured to work independent of the user's IDE configuration (as long as it's vscode).
-
+The objective of this repo is to practice animation especially for hackg=toberfest
 ![typescript](https://user-images.githubusercontent.com/13522179/174338949-b3ca8cd7-a7be-4fc2-8845-7e2c2f44a3b3.png)
 
 
