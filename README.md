@@ -1,6 +1,6 @@
 # next-typescript
 
-The objective of this repo is to practice animation especially for hackg=toberfest
+The objective of this repo is to practice animation especially for hacktoberfest
 ![typescript](https://user-images.githubusercontent.com/13522179/174338949-b3ca8cd7-a7be-4fc2-8845-7e2c2f44a3b3.png)
 
 
